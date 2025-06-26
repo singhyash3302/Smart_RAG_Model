@@ -1,49 +1,71 @@
-# Smart_RAG_Model
+# 🧠 Smart RAG PDF Question Answering System
 
-**Smart_RAG_Model** is an intelligent PDF question-answering application that leverages advanced AI and Retrieval-Augmented Generation (RAG) capabilities to provide responses based on user queries. The app allows you to upload PDFs and query their content using two different modes:
+**Smart_RAG_Model** is an intelligent PDF-based question-answering application that combines **AI**, **Vector Search**, **Wikipedia Search**, and **Web Search via SerpAPI** to provide accurate and contextually relevant answers.
 
-1. **AI + RAG Response**: Generates answers using both AI models and a vector store of the PDF content.
-2. **Smart Routing**: Routes the query to either:
-   - AI Response
-   - AI + RAG Response
-   - Wikipedia Search for additional contextual information.
+Built with **Streamlit (frontend)** and **FastAPI (backend)**, this app lets you upload PDFs and query their content while also supporting real-time factual questions from the web.
 
-This project uses **Streamlit** for the frontend and **FastAPI** for the backend.
+---
 
-## Features
+## 🚀 Features
 
-### 1. PDF Upload and Question Answering
-After uploading PDFs, users can ask questions based on the content of the uploaded PDFs. The app supports multiple PDFs and processes them to create a searchable vector store.
+### 📄 PDF Upload + Vector Store
+- Upload one or more PDFs.
+- Text is automatically extracted, chunked, and stored in a **FAISS vector database**.
+- Uses **HuggingFace embeddings** for similarity search.
 
-### 2. Modes of Answering
-- **AI + RAG Response**: Combines AI-powered answers with retrieval from a pre-built vector store of PDF content.
-- **Smart AI Agent**: Routes the query to either:
-  - **AI Response**: Direct response from the AI model (e.g., using Groq's Llama-3.1).
-  - **AI + RAG Response**: Combines AI with retrieval from vectorstore.
-  - **Wikipedia Search**: If the query is outside the scope of the vectorstore, searches Wikipedia for relevant information.
+### 🧠 Dual Modes of Answering
 
-## Installation
+#### 1. **AI + RAG Mode**
+- Combines Groq’s LLM (LLaMA 3.1) with context from the vector store.
+- Designed for deep answers grounded in your uploaded PDFs.
 
-1. Clone the repository:
+#### 2. **Smart Routing Mode**
+Your question is routed to the most appropriate response path:
 
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/Smart_RAG_Model.git
-   cd Smart_RAG_Model
-   ```
+| Route           | Description |
+|----------------|-------------|
+| `ai_response`   | Friendly or general-purpose answers. |
+| `vectorstore`   | Questions about your uploaded documents. |
+| `wiki_search`   | Looks up verified data from Wikipedia. |
+| `web_search`    | Fetches fresh information using SerpAPI (e.g., breaking news). |
 
-2. Install the required dependencies:
+---
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 📦 Installation
 
-3. Set up environment variables:
+### 1. Clone the Repo
 
-   Ensure you have your **Groq API key** set in the environment:
+````markdown
 
-   ```bash
-   export groq_api_key="YOUR_GROQ_API_KEY"
-   ```
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/singhyash3302/Smart_RAG_Model.git
+cd Smart_RAG_Model
+```
+
+### 2. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Set Environment Variables
+
+Create a `.env` file in the root directory and add your API keys:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+SERPAPI_API_KEY=your_serpapi_key
+```
+
+Or export them manually in the terminal:
+
+```bash
+export GROQ_API_KEY=your_groq_api_key
+export SERPAPI_API_KEY=your_serpapi_key
+```
+
 
 ## Running the Application
 
@@ -102,34 +124,3 @@ The backend supports the following API routes:
      }
      ```
    - **Description**: Routes the query to either an AI response, AI + RAG response, or Wikipedia search depending on the context.
-
-## Project Structure
-
-```
-Smart_RAG_Model/
-│
-├── Home.py                 # Streamlit frontend
-├── fastapi_app.py           # FastAPI backend
-├── requirements.txt         # Python dependencies
-├── README.md                # Project documentation
-└── faiss_index/             # FAISS vector store files
-```
-
-## Technology Stack
-
-- **Frontend**: Streamlit (for uploading PDFs, and asking questions)
-- **Backend**: FastAPI (for handling AI and RAG-based responses)
-- **LLM**: Groq's Llama-3.1-70b model (for AI-based answering)
-- **Vector Store**: FAISS (for managing and retrieving from the PDF content)
-- **Embeddings**: HuggingFace `all-MiniLM-L6-V2`
-- **Wikipedia Search**: Wikipedia API Wrapper
-
-## Example
-
-1. **Upload PDFs**: Upload multiple PDF files, and the system will extract and process the text.
-2. **Ask a Question**: Enter a question related to the content of the PDF.
-3. **Get AI or RAG Response**: Based on the selected option, either an AI model or a combination of AI + RAG will provide an answer. You can also use the Smart Agent, which may route the query to Wikipedia for broader context.
-
-## Contributing
-
-Feel free to contribute by creating a pull request, opening an issue, or improving the documentation.
