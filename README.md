@@ -35,10 +35,6 @@ Your question is routed to the most appropriate response path:
 
 ### 1. Clone the Repo
 
-````markdown
-
-### 1. Clone the Repo
-
 ```bash
 git clone https://github.com/singhyash3302/Smart_RAG_Model.git
 cd Smart_RAG_Model
